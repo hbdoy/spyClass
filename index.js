@@ -19,6 +19,7 @@ var allOtherClass = {};
 var allSportClass = {};
 var timerForGet, timerForGetS;
 
+var app = express();
 var server = app.listen(process.env.PORT || 3000, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
@@ -64,8 +65,6 @@ firebase.auth().signInWithEmailAndPassword(email, pass)
         var errorMessage = error.message;
         console.log(errorMessage)
     })
-
-var app = express();
 
 app.get('/', function (req, res) {
     var message = {
