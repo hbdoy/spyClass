@@ -141,7 +141,7 @@ function firstGetData_sport() {
 
         // ID 選擇
         for (var i = 1; i <= 34; i++) {
-            allClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")] = {
+            allClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "") + "(i)"] = {
                 limit: $("#el" + i + "_aspmaker_course_opened_detail_view_limit>span").text().replace("\n", ""),
                 seleced_no: $("#el" + i + "_aspmaker_course_opened_detail_view_seleced_no>span").text().replace("\n", ""),
                 teacher: $("#el" + i + "_aspmaker_course_opened_detail_view_teachers>span").text().replace("\n", ""),
@@ -252,33 +252,33 @@ function getAllSportClass() {
 
         // ID 選擇
         for (var i = 1; i <= 34; i++) {
-            allClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")] = {
+            allClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "") + "(i)"] = {
                 limit: $("#el" + i + "_aspmaker_course_opened_detail_view_limit>span").text().replace("\n", ""),
                 seleced_no: $("#el" + i + "_aspmaker_course_opened_detail_view_seleced_no>span").text().replace("\n", ""),
                 teacher: $("#el" + i + "_aspmaker_course_opened_detail_view_teachers>span").text().replace("\n", ""),
                 time: $("#el" + i + "_aspmaker_course_opened_detail_view_time>span").text().replace("\n", ""),
                 place: $("#el" + i + "_aspmaker_course_opened_detail_view_place>span").text().replace("\n", ""),
                 fill: parseInt($("#el" + i + "_aspmaker_course_opened_detail_view_seleced_no>span").text().replace("\n", "")) == parseInt($("#el" + i + "_aspmaker_course_opened_detail_view_limit>span").text().replace("\n", "")),
-                lock: allSportClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")].lock,
-                startTime: allSportClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")].startTime
+                lock: allSportClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "") + "(i)"].lock,
+                startTime: allSportClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "") + "(i)"].startTime
             };
             // 某課程舊資料是否是滿的
-            var oldStatus = allSportClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")].fill == true;
-            var oldStatus_lock = allSportClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")].lock == false;
+            var oldStatus = allSportClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "") + "(i)"].fill == true;
+            var oldStatus_lock = allSportClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "") + "(i)"].lock == false;
             // 某課程新資料是否是滿的
             var newStatus = parseInt($("#el" + i + "_aspmaker_course_opened_detail_view_seleced_no>span").text().replace("\n", "")) == parseInt($("#el" + i + "_aspmaker_course_opened_detail_view_limit>span").text().replace("\n", ""));
             // 原本滿的，有人退選，而且舊課程沒有鎖定，就加上鎖定狀態
             if (oldStatus && !newStatus && oldStatus_lock) {
                 var nowTime = Date.now();
-                allClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")].lock = true;
-                allClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")].startTime = nowTime;
+                allClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "") + "(i)"].lock = true;
+                allClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "") + "(i)"].startTime = nowTime;
             }
-            if (allSportClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")].startTime != 0) {
-                var activeTime = Date.now() - allSportClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")].startTime;
+            if (allSportClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "") + "(i)"].startTime != 0) {
+                var activeTime = Date.now() - allSportClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "") + "(i)"].startTime;
                 // 大於6小時，清空
                 if (activeTime >= 6 * 60 * 60 * 1000) {
-                    allClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")].startTime = 0;
-                    allClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")].lock = false;
+                    allClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "") + "(i)"].startTime = 0;
+                    allClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "") + "(i)"].lock = false;
                 }
             }
         }
