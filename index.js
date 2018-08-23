@@ -68,65 +68,11 @@ firebase.auth().signInWithEmailAndPassword(email, pass)
 var app = express();
 
 app.get('/', function (req, res) {
-    request({
-        url: "https://ccweb.ncnu.edu.tw/student/aspmaker_course_opened_detail_viewlist.php?cmd=search&t=aspmaker_course_opened_detail_view&x_year=1071&x_deptid=99&recperpage=200",
-        method: "GET"
-    }, function (error, response, body) {
-        if (error || !body) {
-            console.log("發生錯誤");
-            console.log(error);
-            res.status(404).send("some errors");
-            return;
-        }
-        var $ = cheerio.load(body);
-
-        var allClass = {};
-        var classNum = 0;
-
-        // 課程總數
-        $(".ewPager span").each(function (i, e) {
-            var tmp = $(e).text().split("／");
-            classNum = tmp[1].replace(" ", "");
-            console.log(tmp[1].replace(" ", ""));
-        });
-
-        // class 選擇
-        // $(".aspmaker_course_opened_detail_view_limit>span").each(function (i, e) {
-        //     var tmp = $(e).text();
-        //     // var tmp = $(e).text().split("%");
-        //     allClass.push(tmp);
-        //     // console.log(tmp);
-        // });
-        // $(".aspmaker_course_opened_detail_view_cname span").each(function (i, e) {
-        //     var tmp = $(e).text();
-        //     // var tmp = $(e).text().split("%");
-        //     // allClass.push(tmp);
-        //     console.log(tmp);
-        // });
-        // console.log(allClass.length)
-
-        // ID 選擇
-        for (var i = 1; i <= classNum; i++) {
-            allClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")] = {
-                limit: $("#el" + i + "_aspmaker_course_opened_detail_view_limit>span").text().replace("\n", ""),
-                seleced_no: $("#el" + i + "_aspmaker_course_opened_detail_view_seleced_no>span").text().replace("\n", ""),
-                teacher: $("#el" + i + "_aspmaker_course_opened_detail_view_teachers>span").text().replace("\n", ""),
-                time: $("#el" + i + "_aspmaker_course_opened_detail_view_time>span").text().replace("\n", ""),
-                place: $("#el" + i + "_aspmaker_course_opened_detail_view_place>span").text().replace("\n", ""),
-                fill: parseInt($("#el" + i + "_aspmaker_course_opened_detail_view_seleced_no>span").text().replace("\n", "")) == parseInt($("#el" + i + "_aspmaker_course_opened_detail_view_limit>span").text().replace("\n", "")),
-                lock: false
-            };
-        }
-        db.ref("/other").set({
-            allClass
-        }).then(function () {
-            console.log("OKOK");
-        }).catch(function () {
-            console.log("some error");
-        });
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.status(200).send(JSON.stringify(allClass));
-    });
+    var message = {
+        flag: '{DOnt_hACk_mE_QQ}'
+    }
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.status(200).send(JSON.stringify(message));
 });
 
 
