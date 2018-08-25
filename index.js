@@ -101,10 +101,15 @@ function firstGetData() {
 
         // ID 選擇
         for (var i = 1; i <= classNum; i++) {
-            allClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")] = {
+            var className = $("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "");
+            var classTeacher = $("#el" + i + "_aspmaker_course_opened_detail_view_teachers>span").text().replace("\n", "");
+            if(className.indexOf("Python") != -1 && classTeacher.indexOf("俞旭昇") != -1){
+                className += "(2)";
+            }
+            allClass[className] = {
                 limit: $("#el" + i + "_aspmaker_course_opened_detail_view_limit>span").text().replace("\n", ""),
                 seleced_no: $("#el" + i + "_aspmaker_course_opened_detail_view_seleced_no>span").text().replace("\n", ""),
-                teacher: $("#el" + i + "_aspmaker_course_opened_detail_view_teachers>span").text().replace("\n", ""),
+                teacher: classTeacher,
                 time: $("#el" + i + "_aspmaker_course_opened_detail_view_time>span").text().replace("\n", ""),
                 place: $("#el" + i + "_aspmaker_course_opened_detail_view_place>span").text().replace("\n", ""),
                 fill: parseInt($("#el" + i + "_aspmaker_course_opened_detail_view_seleced_no>span").text().replace("\n", "")) == parseInt($("#el" + i + "_aspmaker_course_opened_detail_view_limit>span").text().replace("\n", "")),
@@ -191,33 +196,38 @@ function getAllOtherClass() {
 
         // ID 選擇
         for (var i = 1; i <= classNum; i++) {
-            allClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")] = {
+            var className = $("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "");
+            var classTeacher = $("#el" + i + "_aspmaker_course_opened_detail_view_teachers>span").text().replace("\n", "");
+            if(className.indexOf("Python") != -1 && classTeacher.indexOf("俞旭昇") != -1){
+                className += "(2)";
+            }
+            allClass[className] = {
                 limit: $("#el" + i + "_aspmaker_course_opened_detail_view_limit>span").text().replace("\n", ""),
                 seleced_no: $("#el" + i + "_aspmaker_course_opened_detail_view_seleced_no>span").text().replace("\n", ""),
-                teacher: $("#el" + i + "_aspmaker_course_opened_detail_view_teachers>span").text().replace("\n", ""),
+                teacher: classTeacher,
                 time: $("#el" + i + "_aspmaker_course_opened_detail_view_time>span").text().replace("\n", ""),
                 place: $("#el" + i + "_aspmaker_course_opened_detail_view_place>span").text().replace("\n", ""),
                 fill: parseInt($("#el" + i + "_aspmaker_course_opened_detail_view_seleced_no>span").text().replace("\n", "")) == parseInt($("#el" + i + "_aspmaker_course_opened_detail_view_limit>span").text().replace("\n", "")),
-                lock: allOtherClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")].lock,
-                startTime: allOtherClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")].startTime
+                lock: allOtherClass[className].lock,
+                startTime: allOtherClass[className].startTime
             };
             // 某課程舊資料是否是滿的
-            var oldStatus = allOtherClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")].fill == true;
-            var oldStatus_lock = allOtherClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")].lock == false;
+            var oldStatus = allOtherClass[className].fill == true;
+            var oldStatus_lock = allOtherClass[className].lock == false;
             // 某課程新資料是否是滿的
             var newStatus = parseInt($("#el" + i + "_aspmaker_course_opened_detail_view_seleced_no>span").text().replace("\n", "")) == parseInt($("#el" + i + "_aspmaker_course_opened_detail_view_limit>span").text().replace("\n", ""));
             // 原本滿的，有人退選，而且舊課程沒有鎖定，就加上鎖定狀態
             if (oldStatus && !newStatus && oldStatus_lock) {
                 var nowTime = Date.now();
-                allClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")].lock = true;
-                allClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")].startTime = nowTime;
+                allClass[className].lock = true;
+                allClass[className].startTime = nowTime;
             }
-            if (allOtherClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")].startTime != 0) {
-                var activeTime = Date.now() - allOtherClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")].startTime;
+            if (allOtherClass[className].startTime != 0) {
+                var activeTime = Date.now() - allOtherClass[className].startTime;
                 // 大於6小時，清空
                 if (activeTime >= 6 * 60 * 60 * 1000) {
-                    allClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")].startTime = 0;
-                    allClass[$("#el" + i + "_aspmaker_course_opened_detail_view_cname>span").text().replace("\n", "")].lock = false;
+                    allClass[className].startTime = 0;
+                    allClass[className].lock = false;
                 }
             }
         }
